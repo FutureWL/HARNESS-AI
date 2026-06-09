@@ -1,0 +1,20 @@
+{
+  "name": "harness-ai",
+  "private": true,
+  "version": "0.1.0",
+  "packageManager": "pnpm@11.5.1",
+  "scripts": {
+    "dev": "concurrently -n renderer,desktop -c cyan,magenta \"pnpm --filter renderer dev\" \"pnpm --filter desktop dev\"",
+    "build": "pnpm check && pnpm --filter renderer build && pnpm --filter desktop build",
+    "check": "pnpm --filter @harness/shared check && pnpm --filter @harness/core check && pnpm --filter renderer check && pnpm --filter desktop check",
+    "test": "tsx --test packages/core/src/**/*.test.ts"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1",
+    "cross-env": "^7.0.3",
+    "electron": "^33.3.0",
+    "tsup": "^8.5.0",
+    "tsx": "^4.20.6",
+    "wait-on": "^8.0.5"
+  }
+}

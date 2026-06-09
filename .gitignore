@@ -1,0 +1,12 @@
+node_modules/
+pnpm-lock.yaml
+apps/renderer/dist/
+apps/desktop/dist/
+coverage/
+*.db
+*.db-shm
+*.db-wal
+.env
+.DS_Store
+.vscode/
+*.log
