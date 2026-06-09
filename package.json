@@ -2,19 +2,53 @@
   "name": "harness-ai",
   "private": true,
   "version": "0.1.0",
+  "type": "module",
+  "main": "apps/desktop/dist/main.js",
   "packageManager": "pnpm@11.5.1",
   "scripts": {
     "dev": "concurrently -n renderer,desktop -c cyan,magenta \"pnpm --filter renderer dev\" \"pnpm --filter desktop dev\"",
     "build": "pnpm check && pnpm --filter renderer build && pnpm --filter desktop build",
     "check": "pnpm --filter @harness/shared check && pnpm --filter @harness/core check && pnpm --filter renderer check && pnpm --filter desktop check",
-    "test": "tsx --test packages/core/src/**/*.test.ts"
+    "test": "tsx --test packages/core/src/**/*.test.ts",
+    "package:dir": "pnpm build && electron-builder --dir -c.electronDist=$(node -p \"require('node:path').join(require('node:path').dirname(require.resolve('electron/package.json')),'dist')\")",
+    "package:linux": "pnpm build && electron-builder --linux dir AppImage -c.electronDist=$(node -p \"require('node:path').join(require('node:path').dirname(require.resolve('electron/package.json')),'dist')\")"
+  },
+  "dependencies": {
+    "@harness/core": "workspace:*"
   },
   "devDependencies": {
     "concurrently": "^9.2.1",
     "cross-env": "^7.0.3",
     "electron": "^33.3.0",
+    "electron-builder": "^25.1.8",
     "tsup": "^8.5.0",
     "tsx": "^4.20.6",
     "wait-on": "^8.0.5"
+  },
+  "build": {
+    "appId": "ai.trae.harness",
+    "productName": "Harness AI",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "package.json",
+      "apps/desktop/dist/**/*",
+      "apps/renderer/dist/**/*",
+      "packages/core/dist/**/*",
+      "packages/core/package.json",
+      "node_modules/**/*"
+    ],
+    "asarUnpack": [
+      "**/*.node",
+      "**/better-sqlite3/**/*"
+    ],
+    "linux": {
+      "category": "Utility",
+      "target": [
+        "dir",
+        "AppImage"
+      ]
+    }
   }
 }

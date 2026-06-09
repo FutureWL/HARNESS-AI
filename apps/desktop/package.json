@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "pnpm run build && wait-on http://localhost:5173 && cross-env VITE_DEV_SERVER_URL=http://localhost:5173 electron dist/main.js",
-    "build": "tsup src/main.ts src/preload.ts --format esm --out-dir dist --clean --target node20 --external electron",
+    "build": "tsc -p tsconfig.build.json --noEmit false --emitDeclarationOnly false",
     "check": "tsc -p tsconfig.json --noEmit",
     "start": "electron dist/main.js"
   },
@@ -14,6 +14,7 @@
     "@harness/shared": "workspace:*"
   },
   "devDependencies": {
+    "@types/node": "^22.0.0",
     "typescript": "~5.8.3"
   }
 }

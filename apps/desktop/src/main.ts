@@ -4,7 +4,7 @@ import { fileURLToPath } from 'node:url'
 
 import { HarnessService } from '@harness/core'
 
-import { registerIpcHandlers } from './ipc/index'
+import { registerIpcHandlers } from './ipc/index.js'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)

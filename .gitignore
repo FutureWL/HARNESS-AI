@@ -2,6 +2,8 @@ node_modules/
 pnpm-lock.yaml
 apps/renderer/dist/
 apps/desktop/dist/
+packages/core/dist/
+release/
 coverage/
 *.db
 *.db-shm
