@@ -1,0 +1,11 @@
+services:
+  harness-portal:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "30100:80"
+      - "30101:443"
+    volumes:
+      - ./certs:/etc/nginx/certs
+    restart: unless-stopped

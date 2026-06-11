@@ -1,0 +1,356 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Harness AI · 本地知识工作台</title>
+    <meta name="description" content="Harness AI：面向知识工作者的本地知识库与检索问答桌面应用原型。支持导入文档、SQLite 本地索引、搜索与 RAG 问答。" />
+    <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="bg"></div>
+    <div class="grain"></div>
+    <header class="topbar">
+      <a class="brand" href="#top">
+        <span class="mark" aria-hidden="true"></span>
+        <span class="brand-text">Harness AI</span>
+      </a>
+      <nav class="nav">
+        <a href="#features">能力</a>
+        <a href="#architecture">架构</a>
+        <a href="#quickstart">快速开始</a>
+        <a href="#download">下载</a>
+      </nav>
+      <div class="topbar-actions">
+        <a class="btn btn-ghost" href="#download">获取 AppImage</a>
+        <a class="btn btn-primary" href="#quickstart">本地运行</a>
+      </div>
+    </header>
+
+    <main id="top" class="wrap">
+      <section class="hero">
+        <div class="hero-left">
+          <div class="pill">
+            <span class="dot"></span>
+            <span>本地优先 · 可离线 · SQLite 索引 · RAG 问答</span>
+          </div>
+
+          <h1 class="hero-title">
+            把你的文档
+            <span class="hero-accent">变成可搜索、可对话</span>
+            的知识工作台
+          </h1>
+          <p class="hero-subtitle">
+            Harness AI 是一个桌面端原型：导入 Markdown/TXT/PDF，构建本地 SQLite 知识库与全文索引，提供检索 + 问答体验，并支持配置 OpenAI 兼容接口。
+          </p>
+
+          <div class="hero-cta">
+            <a class="btn btn-primary" href="#download">下载 AppImage</a>
+            <a class="btn btn-ghost" href="#features">查看能力</a>
+          </div>
+
+          <div class="hero-meta">
+            <div class="meta-card">
+              <div class="meta-k">导入</div>
+              <div class="meta-v">Markdown / TXT / PDF</div>
+            </div>
+            <div class="meta-card">
+              <div class="meta-k">存储</div>
+              <div class="meta-v">SQLite · 本地文件</div>
+            </div>
+            <div class="meta-card">
+              <div class="meta-k">问答</div>
+              <div class="meta-v">OpenAI 兼容 API</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-right" aria-label="产品预览">
+          <div class="device">
+            <div class="device-top">
+              <div class="window-controls" aria-hidden="true">
+                <span class="wc wc-r"></span>
+                <span class="wc wc-y"></span>
+                <span class="wc wc-g"></span>
+              </div>
+              <div class="device-title">Harness AI</div>
+              <div class="device-status">local</div>
+            </div>
+            <div class="device-body">
+              <div class="panel panel-left">
+                <div class="panel-title">知识库</div>
+                <div class="list">
+                  <div class="item active">
+                    <div class="item-title">项目 README</div>
+                    <div class="item-sub">导入 · 切片 · 索引</div>
+                  </div>
+                  <div class="item">
+                    <div class="item-title">会议纪要</div>
+                    <div class="item-sub">标签 · 搜索</div>
+                  </div>
+                  <div class="item">
+                    <div class="item-title">技术笔记</div>
+                    <div class="item-sub">RAG · 对话</div>
+                  </div>
+                </div>
+              </div>
+              <div class="panel panel-main">
+                <div class="panel-title">提问</div>
+                <div class="chat">
+                  <div class="bubble user">
+                    Harness AI 能做什么？
+                  </div>
+                  <div class="bubble bot">
+                    我可以导入本地文档，建立 SQLite 索引，提供搜索与基于检索的问答。你也可以在设置中配置 OpenAI 兼容接口。
+                  </div>
+                  <div class="bubble user">
+                    如何开始？
+                  </div>
+                  <div class="bubble bot">
+                    下载 AppImage 或本地运行：pnpm install → pnpm dev。
+                  </div>
+                </div>
+                <div class="prompt">
+                  <span class="prompt-hint">输入问题…</span>
+                  <span class="prompt-key">Enter</span>
+                </div>
+              </div>
+            </div>
+            <div class="device-glow"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="features" class="section">
+        <div class="section-head">
+          <h2>当前能力</h2>
+          <p>一个足够小、但真实可运行的桌面端原型：从文档到本地索引，再到可配置的检索问答。</p>
+        </div>
+
+        <div class="grid-3">
+          <div class="card">
+            <div class="card-top">
+              <div class="icon i-import" aria-hidden="true"></div>
+              <div class="card-title">导入本地文件</div>
+            </div>
+            <div class="card-body">选择文件或文件夹，批量导入 Markdown / TXT / PDF。</div>
+            <div class="card-foot">Electron Dialog · IPC</div>
+          </div>
+          <div class="card">
+            <div class="card-top">
+              <div class="icon i-db" aria-hidden="true"></div>
+              <div class="card-title">SQLite 知识库</div>
+            </div>
+            <div class="card-body">本地持久化存储，FTS5 全文检索，数据可控可迁移。</div>
+            <div class="card-foot">better-sqlite3 · FTS5</div>
+          </div>
+          <div class="card">
+            <div class="card-top">
+              <div class="icon i-search" aria-hidden="true"></div>
+              <div class="card-title">搜索检索</div>
+            </div>
+            <div class="card-body">对知识库执行查询，返回片段与相关度。</div>
+            <div class="card-foot">bm25 · snippet</div>
+          </div>
+          <div class="card">
+            <div class="card-top">
+              <div class="icon i-chat" aria-hidden="true"></div>
+              <div class="card-title">RAG 问答</div>
+            </div>
+            <div class="card-body">将检索结果拼接为上下文，调用 OpenAI 兼容接口生成回答。</div>
+            <div class="card-foot">/v1/chat/completions</div>
+          </div>
+          <div class="card">
+            <div class="card-top">
+              <div class="icon i-settings" aria-hidden="true"></div>
+              <div class="card-title">模型设置</div>
+            </div>
+            <div class="card-body">本地保存 model / apiKey / baseUrl，随时替换后端。</div>
+            <div class="card-foot">settings.json</div>
+          </div>
+          <div class="card">
+            <div class="card-top">
+              <div class="icon i-local" aria-hidden="true"></div>
+              <div class="card-title">本地优先</div>
+            </div>
+            <div class="card-body">文档与索引保存在 userData 目录，默认不上传任何内容。</div>
+            <div class="card-foot">local-first</div>
+          </div>
+        </div>
+      </section>
+
+      <section id="architecture" class="section">
+        <div class="section-head">
+          <h2>项目架构</h2>
+          <p>三层清晰分工：桌面壳、渲染 UI、本地核心能力。通过 IPC 把安全能力桥接到前端。</p>
+        </div>
+
+        <div class="arch">
+          <div class="arch-col">
+            <div class="arch-card">
+              <div class="arch-title">apps/desktop</div>
+              <div class="arch-body">Electron 主进程 · 窗口创建 · IPC Handler</div>
+              <div class="arch-tags">
+                <span>main</span><span>preload</span><span>ipcMain</span>
+              </div>
+            </div>
+            <div class="arch-arrow" aria-hidden="true">
+              <span>IPC</span>
+            </div>
+            <div class="arch-card">
+              <div class="arch-title">apps/renderer</div>
+              <div class="arch-body">React + Vite 前端界面 · 路由 · 交互</div>
+              <div class="arch-tags">
+                <span>React</span><span>Vite</span><span>Tailwind</span>
+              </div>
+            </div>
+          </div>
+          <div class="arch-core">
+            <div class="arch-core-head">
+              <div class="arch-title">packages/core</div>
+              <div class="arch-body">本地知识库逻辑：导入、索引、检索、问答、设置</div>
+            </div>
+            <div class="arch-core-grid">
+              <div class="chip">DocumentStore (SQLite/FTS5)</div>
+              <div class="chip">ChatStore (JSON)</div>
+              <div class="chip">SettingsStore (JSON)</div>
+              <div class="chip">HarnessService</div>
+              <div class="chip">Import Pipeline</div>
+              <div class="chip">RAG Prompt</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="quickstart" class="section">
+        <div class="section-head">
+          <h2>快速开始</h2>
+          <p>开发模式：前端 Vite + Electron 主进程并行启动。生产模式：构建前端静态产物并打包客户端。</p>
+        </div>
+
+        <div class="split">
+          <div class="codecard">
+            <div class="codehead">
+              <div class="codetitle">本地开发</div>
+              <button class="copy" data-copy="dev">复制</button>
+            </div>
+            <pre class="code"><code id="code-dev">pnpm install
+pnpm dev</code></pre>
+            <div class="codefoot">会同时启动 renderer 与 desktop（Electron 将加载 Vite 地址）。</div>
+          </div>
+
+          <div class="codecard">
+            <div class="codehead">
+              <div class="codetitle">构建 & 打包</div>
+              <button class="copy" data-copy="pkg">复制</button>
+            </div>
+            <pre class="code"><code id="code-pkg">pnpm build
+pnpm package:dir
+pnpm package:linux</code></pre>
+            <div class="codefoot">产物在 release/，包含 linux-unpacked 与 AppImage。</div>
+          </div>
+        </div>
+      </section>
+
+      <section id="download" class="section">
+        <div class="section-head">
+          <h2>下载与使用</h2>
+          <p>AppImage 无需安装：赋予执行权限即可运行。在 Ubuntu 24.04 上如遇 FUSE 问题，可安装兼容库。</p>
+        </div>
+
+        <div class="download">
+          <div class="download-card">
+            <div class="download-title">AppImage（Ubuntu 24.04）</div>
+            <div class="download-body">
+              <div class="download-meta">
+                <div class="kv"><span>文件</span><span>Harness AI-0.1.0.AppImage</span></div>
+                <div class="kv"><span>方式</span><span>chmod +x → 直接运行</span></div>
+              </div>
+              <div class="download-actions">
+                <a class="btn btn-primary" href="#" aria-disabled="true">下载（请替换链接）</a>
+                <a class="btn btn-ghost" href="#quickstart">本地构建</a>
+              </div>
+              <div class="mini">
+                <div class="mini-title">运行命令</div>
+                <pre class="mini-code"><code>chmod +x "Harness AI-0.1.0.AppImage"
+./"Harness AI-0.1.0.AppImage"</code></pre>
+              </div>
+              <div class="mini">
+                <div class="mini-title">FUSE 兼容库</div>
+                <pre class="mini-code"><code>sudo apt update
+sudo apt install libfuse2t64</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <div class="download-side">
+            <div class="side-card">
+              <div class="side-title">目录版客户端</div>
+              <div class="side-body">适合在 CI / 服务器上产出可执行目录，不依赖额外 AppImage 工具。</div>
+              <pre class="mini-code"><code>pnpm package:dir
+./release/linux-unpacked/harness-ai</code></pre>
+            </div>
+
+            <div class="side-card">
+              <div class="side-title">Nginx + Docker 门户</div>
+              <div class="side-body">本页面支持容器化部署。把 portal/ 目录构建为 Nginx 静态站点即可。</div>
+              <div class="side-actions">
+                <a class="btn btn-ghost" href="#portal">查看部署</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="portal" class="section">
+        <div class="section-head">
+          <h2>门户部署（Nginx + Docker）</h2>
+          <p>适合用于项目介绍页、下载页与文档入口。零依赖：只需要 Docker 与 Docker Compose。</p>
+        </div>
+        <div class="split">
+          <div class="codecard">
+            <div class="codehead">
+              <div class="codetitle">启动</div>
+              <button class="copy" data-copy="docker">复制</button>
+            </div>
+            <pre class="code"><code id="code-docker">cd portal
+docker compose up -d
+open http://localhost:8080</code></pre>
+            <div class="codefoot">默认监听 8080，你可以在 compose 文件里修改端口。</div>
+          </div>
+          <div class="codecard">
+            <div class="codehead">
+              <div class="codetitle">更新内容</div>
+              <button class="copy" data-copy="content">复制</button>
+            </div>
+            <pre class="code"><code id="code-content">编辑 portal/site/index.html
+编辑 portal/site/styles.css
+docker compose restart</code></pre>
+            <div class="codefoot">也可以把 portal/site 替换为你自己的静态站点产物。</div>
+          </div>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <div class="footer-left">
+          <div class="brand small">
+            <span class="mark" aria-hidden="true"></span>
+            <span class="brand-text">Harness AI</span>
+          </div>
+          <div class="footer-note">
+            一个面向知识工作者的个人知识 harness 桌面应用原型。
+          </div>
+        </div>
+        <div class="footer-right">
+          <a href="#top">回到顶部</a>
+          <a href="#quickstart">快速开始</a>
+          <a href="#portal">门户部署</a>
+        </div>
+      </footer>
+    </main>
+
+    <script src="./script.js"></script>
+  </body>
+</html>
+
