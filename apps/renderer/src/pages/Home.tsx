@@ -12,6 +12,7 @@ import {
   Search,
   Settings2,
   Sparkles,
+  UserRound,
 } from "lucide-react";
 
 type DocumentRecord = {
@@ -27,6 +28,9 @@ type SettingsRecord = {
   model: string;
   apiKey: string;
   baseUrl: string;
+  adminApiBaseUrl?: string;
+  adminAccessToken?: string;
+  adminUserEmail?: string;
 };
 
 type IpcReply<T> = {
@@ -41,6 +45,7 @@ type HarnessApi = {
   importFiles: (paths: string[]) => Promise<IpcReply<DocumentRecord[]>>;
   listDocuments: (query?: string) => Promise<IpcReply<DocumentRecord[]>>;
   getSettings: () => Promise<IpcReply<SettingsRecord>>;
+  updateSettings?: (payload: Record<string, string>) => Promise<IpcReply<SettingsRecord>>;
 };
 
 const mockDocuments: DocumentRecord[] = [
@@ -74,6 +79,7 @@ const mockSettings: SettingsRecord = {
   model: "gpt-4o-mini",
   apiKey: "",
   baseUrl: "https://api.openai.com",
+  adminApiBaseUrl: "http://localhost:3201",
 };
 
 const quickActions = [
@@ -123,6 +129,11 @@ export default function Home() {
   const [importing, setImporting] = useState(false);
   const [error, setError] = useState("");
   const [notice, setNotice] = useState("");
+  const [adminEmail, setAdminEmail] = useState("user1@harness.local");
+  const [adminPassword, setAdminPassword] = useState("user123456");
+  const [adminLoggingIn, setAdminLoggingIn] = useState(false);
+  const [adminLoginError, setAdminLoginError] = useState("");
+  const adminConfigured = Boolean(settings.adminAccessToken);
 
   async function loadHome() {
     setLoading(true);
@@ -178,6 +189,57 @@ export default function Home() {
       setError(err instanceof Error ? err.message : "导入失败");
     } finally {
       setImporting(false);
+    }
+  }
+
+  async function handleAdminLogin() {
+    setAdminLoggingIn(true);
+    setAdminLoginError("");
+
+    try {
+      const baseUrl = (settings.adminApiBaseUrl || "http://localhost:3201").replace(/\/$/, "");
+      const response = await fetch(`${baseUrl}/api/auth/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: adminEmail, password: adminPassword }),
+      });
+
+      const payload = (await response.json()) as {
+        success: boolean;
+        data?: { accessToken: string; profile: { email: string } };
+        message?: string;
+      };
+
+      if (!response.ok || !payload.success || !payload.data) {
+        throw new Error(payload.message || "登录后台失败");
+      }
+
+      const nextSettings: SettingsRecord = {
+        ...settings,
+        adminAccessToken: payload.data.accessToken,
+        adminUserEmail: payload.data.profile.email,
+      };
+
+      if (harness?.updateSettings) {
+        const reply = await harness.updateSettings({
+          adminAccessToken: payload.data.accessToken,
+          adminUserEmail: payload.data.profile.email,
+          adminApiBaseUrl: baseUrl,
+        });
+        if (reply.success && reply.data) {
+          setSettings(reply.data);
+        } else {
+          setSettings(nextSettings);
+        }
+      } else {
+        setSettings(nextSettings);
+      }
+
+      setNotice("已登录后台，可用于后续设备绑定与配置下发测试。");
+    } catch (err) {
+      setAdminLoginError(err instanceof Error ? err.message : "登录失败");
+    } finally {
+      setAdminLoggingIn(false);
     }
   }
 
@@ -460,6 +522,73 @@ export default function Home() {
                     <div className="mt-1 text-slate-200">
                       {configured ? "已配置，可继续接问答页面" : "未配置，当前无法请求模型"}
                     </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="rounded-[28px] border border-white/10 bg-slate-900/80 p-5">
+                <div className="flex items-center gap-3">
+                  <div className="rounded-2xl bg-emerald-400/10 p-2 text-emerald-300">
+                    <UserRound className="h-5 w-5" />
+                  </div>
+                  <div>
+                    <div className="text-lg font-semibold text-white">后台登录（测试）</div>
+                    <div className="text-sm text-slate-400">用于验证桌面端与后台账号体系连通</div>
+                  </div>
+                </div>
+
+                <div className="mt-5 space-y-3 text-sm">
+                  <div className="rounded-2xl bg-white/[0.03] px-4 py-3">
+                    <div className="text-slate-500">后台地址</div>
+                    <div className="mt-1 break-all text-slate-200">
+                      {settings.adminApiBaseUrl || "http://localhost:3201"}
+                    </div>
+                  </div>
+                  <label className="block rounded-2xl bg-white/[0.03] px-4 py-3">
+                    <div className="text-slate-500">邮箱</div>
+                    <input
+                      value={adminEmail}
+                      onChange={(event) => setAdminEmail(event.target.value)}
+                      className="mt-2 w-full bg-transparent text-slate-200 outline-none placeholder:text-slate-600"
+                      placeholder="user@harness.local"
+                    />
+                  </label>
+                  <label className="block rounded-2xl bg-white/[0.03] px-4 py-3">
+                    <div className="text-slate-500">密码</div>
+                    <input
+                      value={adminPassword}
+                      onChange={(event) => setAdminPassword(event.target.value)}
+                      type="password"
+                      className="mt-2 w-full bg-transparent text-slate-200 outline-none placeholder:text-slate-600"
+                      placeholder="请输入密码"
+                    />
+                  </label>
+
+                  {adminLoginError ? (
+                    <div className="rounded-2xl border border-rose-400/20 bg-rose-400/10 px-4 py-3 text-sm text-rose-100">
+                      {adminLoginError}
+                    </div>
+                  ) : null}
+
+                  <div className="flex flex-wrap items-center justify-between gap-3">
+                    <span
+                      className={`rounded-full px-3 py-1 text-xs ${
+                        adminConfigured
+                          ? "bg-emerald-400/15 text-emerald-300"
+                          : "bg-slate-800 text-slate-300"
+                      }`}
+                    >
+                      {adminConfigured ? `已登录：${settings.adminUserEmail || ""}` : "未登录"}
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => void handleAdminLogin()}
+                      disabled={adminLoggingIn}
+                      className="inline-flex items-center gap-2 rounded-2xl border border-emerald-300/20 bg-emerald-300/10 px-4 py-2 text-sm text-emerald-200 transition hover:bg-emerald-300/15 disabled:cursor-not-allowed disabled:opacity-60"
+                    >
+                      {adminLoggingIn ? "登录中..." : "登录后台"}
+                      <ArrowRight className="h-4 w-4" />
+                    </button>
                   </div>
                 </div>
               </div>

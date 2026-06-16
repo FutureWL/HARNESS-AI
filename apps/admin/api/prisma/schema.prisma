@@ -1,0 +1,111 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Organization {
+  id            String          @id @default(uuid())
+  name          String
+  code          String          @unique
+  status        String          @default("active")
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  users         User[]
+  devices       Device[]
+  licenses      License[]
+  modelProfiles ModelProfile[]
+  systemConfigs SystemConfig[]
+}
+
+model User {
+  id           String      @id @default(uuid())
+  organization Organization? @relation(fields: [organizationId], references: [id])
+  organizationId String?
+  email        String      @unique
+  passwordHash String
+  name         String
+  status       String      @default("active")
+  role         String      @default("org-admin")
+  lastLoginAt  DateTime?
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+}
+
+model Device {
+  id             String       @id @default(uuid())
+  organization    Organization? @relation(fields: [organizationId], references: [id])
+  organizationId String?
+  userId         String?
+  deviceCode     String       @unique
+  platform       String
+  appVersion     String
+  status         String       @default("offline")
+  lastSeenAt     DateTime?
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  syncJobs       SyncJob[]
+}
+
+model License {
+  id             String       @id @default(uuid())
+  organization    Organization @relation(fields: [organizationId], references: [id])
+  organizationId String
+  plan           String
+  seatLimit      Int          @default(1)
+  expiresAt      DateTime
+  status         String       @default("active")
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+}
+
+model ModelProfile {
+  id             String       @id @default(uuid())
+  organization    Organization @relation(fields: [organizationId], references: [id])
+  organizationId String
+  provider       String
+  apiBaseUrl     String
+  model          String
+  systemPrompt   String?
+  enabled        Boolean      @default(true)
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+}
+
+model SystemConfig {
+  id             String       @id @default(uuid())
+  organization    Organization @relation(fields: [organizationId], references: [id])
+  organizationId String
+  configKey      String
+  configValue    Json
+  updatedBy      String?
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  @@unique([organizationId, configKey])
+}
+
+model AuditLog {
+  id          String   @id @default(uuid())
+  actorUserId String?
+  action      String
+  targetType  String
+  targetId    String?
+  payload     Json     @default("{}")
+  createdAt   DateTime @default(now())
+}
+
+model SyncJob {
+  id        String   @id @default(uuid())
+  device    Device   @relation(fields: [deviceId], references: [id])
+  deviceId  String
+  jobType   String
+  status    String   @default("pending")
+  payload   Json     @default("{}")
+  result    Json     @default("{}")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

@@ -7,8 +7,10 @@
   "packageManager": "pnpm@11.5.1",
   "scripts": {
     "dev": "concurrently -n renderer,desktop -c cyan,magenta \"pnpm --filter renderer dev\" \"pnpm --filter desktop dev\"",
+    "dev:admin": "concurrently -n admin-web,admin-api -c blue,green \"pnpm --filter @harness/admin-web dev\" \"pnpm --filter @harness/admin-api start:dev\"",
     "build": "pnpm check && pnpm --filter renderer build && pnpm --filter desktop build",
-    "check": "pnpm --filter @harness/shared check && pnpm --filter @harness/core check && pnpm --filter renderer check && pnpm --filter desktop check",
+    "build:admin": "pnpm --filter @harness/admin-web build && pnpm --filter @harness/admin-api build",
+    "check": "pnpm --filter @harness/shared check && pnpm --filter @harness/core check && pnpm --filter renderer check && pnpm --filter desktop check && pnpm --filter @harness/admin-web check && pnpm --filter @harness/admin-api test:ci",
     "test": "tsx --test packages/core/src/**/*.test.ts",
     "package:dir": "pnpm build && electron-builder --dir -c.electronDist=$(node -p \"require('node:path').join(require('node:path').dirname(require.resolve('electron/package.json')),'dist')\")",
     "package:linux": "pnpm build && electron-builder --linux dir AppImage -c.electronDist=$(node -p \"require('node:path').join(require('node:path').dirname(require.resolve('electron/package.json')),'dist')\")"

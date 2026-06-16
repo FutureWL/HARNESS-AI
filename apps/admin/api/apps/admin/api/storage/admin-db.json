@@ -1,0 +1,187 @@
+{
+  "organizations": [
+    {
+      "id": "017fd45d-bba5-4858-b0ac-5f8e3b7fab07",
+      "name": "Harness 演示组织",
+      "code": "HARNESS-DEMO",
+      "status": "active",
+      "createdAt": "2026-06-15T02:29:00.703Z"
+    }
+  ],
+  "users": [
+    {
+      "id": "f2270bf8-133c-4b11-b088-b006f683be9b",
+      "organizationId": "017fd45d-bba5-4858-b0ac-5f8e3b7fab07",
+      "email": "user1@harness.local",
+      "name": "终端用户 1",
+      "role": "end-user",
+      "status": "active",
+      "passwordHash": "90aae915da86d3b3a4da7a996bc264bfbaf50a953cbbe8cd3478a2a6ccc7b900",
+      "createdAt": "2026-06-15T03:08:08.932Z",
+      "lastLoginAt": "2026-06-15T03:13:17.360Z"
+    },
+    {
+      "id": "d22c3ae9-a62f-4943-aa54-f6cc635ee898",
+      "organizationId": "017fd45d-bba5-4858-b0ac-5f8e3b7fab07",
+      "email": "admin@harness.local",
+      "name": "平台管理员",
+      "role": "super-admin",
+      "status": "active",
+      "passwordHash": "ac0e7d037817094e9e0b4441f9bae3209d67b02fa484917065f71b16109a1a78",
+      "lastLoginAt": "2026-06-15T03:08:08.884Z",
+      "createdAt": "2026-06-15T02:29:00.703Z"
+    }
+  ],
+  "devices": [
+    {
+      "id": "23097359-e501-4930-9c8d-6d4160551673",
+      "organizationId": "017fd45d-bba5-4858-b0ac-5f8e3b7fab07",
+      "userId": "d22c3ae9-a62f-4943-aa54-f6cc635ee898",
+      "deviceCode": "HARNESS-A1B2C3",
+      "platform": "linux",
+      "appVersion": "0.1.0",
+      "status": "online",
+      "lastSeenAt": "2026-06-15T02:29:00.703Z",
+      "createdAt": "2026-06-15T02:29:00.703Z"
+    }
+  ],
+  "licenses": [
+    {
+      "id": "b960a50c-c8ac-45dc-a891-333e6d17a77b",
+      "organizationId": "017fd45d-bba5-4858-b0ac-5f8e3b7fab07",
+      "plan": "Team Trial",
+      "seatLimit": 20,
+      "expiresAt": "2026-07-30T02:29:00.704Z",
+      "status": "active"
+    }
+  ],
+  "modelProfiles": [
+    {
+      "id": "2ae60892-6556-4365-ba6f-f1badf35af20",
+      "organizationId": "017fd45d-bba5-4858-b0ac-5f8e3b7fab07",
+      "provider": "OpenAI Compatible",
+      "apiBaseUrl": "https://api.example.com/v1",
+      "model": "gpt-4o-mini",
+      "systemPrompt": "你是 Harness AI 的企业知识助手。",
+      "enabled": true,
+      "updatedAt": "2026-06-15T02:29:00.703Z"
+    }
+  ],
+  "systemConfigs": [
+    {
+      "id": "49289e7e-e357-499d-8014-a8a6c79e7575",
+      "organizationId": "017fd45d-bba5-4858-b0ac-5f8e3b7fab07",
+      "configKey": "allowExternalModel",
+      "configValue": true,
+      "updatedAt": "2026-06-15T02:29:00.703Z"
+    },
+    {
+      "id": "ef6b4ad0-d04d-4b18-b1dd-5d0f3815fce6",
+      "organizationId": "017fd45d-bba5-4858-b0ac-5f8e3b7fab07",
+      "configKey": "allowUploadContent",
+      "configValue": false,
+      "updatedAt": "2026-06-15T02:29:00.703Z"
+    }
+  ],
+  "auditLogs": [
+    {
+      "id": "7cb24549-3b84-4d61-9214-1e8f95ee4e37",
+      "createdAt": "2026-06-15T03:13:17.360Z",
+      "actorUserId": "f2270bf8-133c-4b11-b088-b006f683be9b",
+      "action": "auth.login",
+      "targetType": "user",
+      "targetId": "f2270bf8-133c-4b11-b088-b006f683be9b",
+      "detail": "终端用户 1 登录后台"
+    },
+    {
+      "id": "6e21c947-e477-4d71-a5e5-d8d8ef87b725",
+      "createdAt": "2026-06-15T03:12:29.214Z",
+      "actorUserId": "f2270bf8-133c-4b11-b088-b006f683be9b",
+      "action": "auth.login",
+      "targetType": "user",
+      "targetId": "f2270bf8-133c-4b11-b088-b006f683be9b",
+      "detail": "终端用户 1 登录后台"
+    },
+    {
+      "id": "8670be59-5129-4f5a-bf9a-be5ffb3d58f7",
+      "createdAt": "2026-06-15T03:08:15.624Z",
+      "actorUserId": "f2270bf8-133c-4b11-b088-b006f683be9b",
+      "action": "auth.login",
+      "targetType": "user",
+      "targetId": "f2270bf8-133c-4b11-b088-b006f683be9b",
+      "detail": "终端用户 1 登录后台"
+    },
+    {
+      "id": "118a9dec-eace-4ce3-b3ca-cfcae7cf3d5f",
+      "createdAt": "2026-06-15T03:08:08.932Z",
+      "actorUserId": "d22c3ae9-a62f-4943-aa54-f6cc635ee898",
+      "action": "user.created",
+      "targetType": "user",
+      "targetId": "f2270bf8-133c-4b11-b088-b006f683be9b",
+      "detail": "创建用户 user1@harness.local"
+    },
+    {
+      "id": "7fa6ff1e-62b7-4370-b47f-9da1b03434e1",
+      "createdAt": "2026-06-15T03:08:08.884Z",
+      "actorUserId": "d22c3ae9-a62f-4943-aa54-f6cc635ee898",
+      "action": "auth.login",
+      "targetType": "user",
+      "targetId": "d22c3ae9-a62f-4943-aa54-f6cc635ee898",
+      "detail": "平台管理员 登录后台"
+    },
+    {
+      "id": "bf7223ee-843c-4138-a8ad-639d3603f505",
+      "createdAt": "2026-06-15T03:08:02.455Z",
+      "actorUserId": "d22c3ae9-a62f-4943-aa54-f6cc635ee898",
+      "action": "auth.login",
+      "targetType": "user",
+      "targetId": "d22c3ae9-a62f-4943-aa54-f6cc635ee898",
+      "detail": "平台管理员 登录后台"
+    },
+    {
+      "id": "ee899354-9901-4215-9c7b-990514bd75e6",
+      "createdAt": "2026-06-15T03:05:24.351Z",
+      "actorUserId": "d22c3ae9-a62f-4943-aa54-f6cc635ee898",
+      "action": "auth.login",
+      "targetType": "user",
+      "targetId": "d22c3ae9-a62f-4943-aa54-f6cc635ee898",
+      "detail": "平台管理员 登录后台"
+    },
+    {
+      "id": "8f7f1c10-27c3-43e9-88c9-321eaebaa622",
+      "createdAt": "2026-06-15T02:58:11.920Z",
+      "actorUserId": "d22c3ae9-a62f-4943-aa54-f6cc635ee898",
+      "action": "auth.login",
+      "targetType": "user",
+      "targetId": "d22c3ae9-a62f-4943-aa54-f6cc635ee898",
+      "detail": "平台管理员 登录后台"
+    },
+    {
+      "id": "5c452ccf-388c-4790-ae81-064dbe08512c",
+      "createdAt": "2026-06-15T02:31:24.690Z",
+      "actorUserId": "d22c3ae9-a62f-4943-aa54-f6cc635ee898",
+      "action": "auth.login",
+      "targetType": "user",
+      "targetId": "d22c3ae9-a62f-4943-aa54-f6cc635ee898",
+      "detail": "平台管理员 登录后台"
+    },
+    {
+      "id": "668a590b-8308-4134-9c5e-2280903044a3",
+      "actorUserId": "d22c3ae9-a62f-4943-aa54-f6cc635ee898",
+      "action": "system.bootstrap",
+      "targetType": "system",
+      "targetId": "017fd45d-bba5-4858-b0ac-5f8e3b7fab07",
+      "detail": "初始化后台演示数据",
+      "createdAt": "2026-06-15T02:29:00.703Z"
+    }
+  ],
+  "syncJobs": [
+    {
+      "id": "3c946203-9a50-4399-be2b-f31cc525e3ed",
+      "deviceId": "23097359-e501-4930-9c8d-6d4160551673",
+      "jobType": "config.pull",
+      "status": "success",
+      "updatedAt": "2026-06-15T02:29:00.703Z"
+    }
+  ]
+}
