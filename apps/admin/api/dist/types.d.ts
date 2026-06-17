@@ -43,6 +43,7 @@ export interface ModelProfileRecord {
     organizationId: string;
     provider: string;
     apiBaseUrl: string;
+    apiKey?: string;
     model: string;
     systemPrompt: string;
     enabled: boolean;
@@ -71,6 +72,67 @@ export interface SyncJobRecord {
     status: 'pending' | 'success' | 'failed';
     updatedAt: string;
 }
+export type ChatMessageRole = 'user' | 'assistant' | 'system';
+export interface ChatCitationRecord {
+    documentId: string;
+    title: string;
+    snippet: string;
+}
+export interface ChatMessageRecord {
+    id: string;
+    sessionId: string;
+    userId: string;
+    role: ChatMessageRole;
+    content: string;
+    citations: ChatCitationRecord[];
+    createdAt: string;
+}
+export interface ChatSessionRecord {
+    id: string;
+    userId: string;
+    organizationId: string;
+    title: string;
+    modelProfileId?: string;
+    createdAt: string;
+    updatedAt: string;
+}
+export type AgentStatus = 'active' | 'disabled';
+export interface AgentRecord {
+    id: string;
+    userId: string;
+    organizationId: string;
+    name: string;
+    avatar: string;
+    description: string;
+    systemPrompt: string;
+    welcomeMessage: string;
+    modelProfileId?: string;
+    temperature: number;
+    maxTokens: number;
+    topP: number;
+    status: AgentStatus;
+    createdAt: string;
+    updatedAt: string;
+}
+export interface AgentChatMessageRecord {
+    id: string;
+    sessionId: string;
+    agentId: string;
+    userId: string;
+    role: ChatMessageRole;
+    content: string;
+    citations: ChatCitationRecord[];
+    createdAt: string;
+}
+export interface AgentChatSessionRecord {
+    id: string;
+    agentId: string;
+    userId: string;
+    organizationId: string;
+    title: string;
+    createdAt: string;
+    updatedAt: string;
+}
 export interface PersistedAdminData {
     organizations: OrganizationRecord[];
     users: AdminUserRecord[];
@@ -80,4 +142,9 @@ export interface PersistedAdminData {
     systemConfigs: SystemConfigRecord[];
     auditLogs: AuditLogRecord[];
     syncJobs: SyncJobRecord[];
+    chatSessions: ChatSessionRecord[];
+    chatMessages: ChatMessageRecord[];
+    agents: AgentRecord[];
+    agentSessions: AgentChatSessionRecord[];
+    agentMessages: AgentChatMessageRecord[];
 }

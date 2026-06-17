@@ -109,6 +109,30 @@ let AppController = class AppController {
             data: this.adminService.listModelProfiles(),
         };
     }
+    async createModelProfile(request, body) {
+        const token = request.headers.authorization?.replace('Bearer ', '') ?? '';
+        const payload = this.adminService.getCurrentUser(token);
+        return {
+            success: true,
+            data: await this.adminService.createModelProfile(body, payload.id),
+        };
+    }
+    async updateModelProfile(request, id, body) {
+        const token = request.headers.authorization?.replace('Bearer ', '') ?? '';
+        const payload = this.adminService.getCurrentUser(token);
+        return {
+            success: true,
+            data: await this.adminService.updateModelProfile(id, body, payload.id),
+        };
+    }
+    async deleteModelProfile(request, id) {
+        const token = request.headers.authorization?.replace('Bearer ', '') ?? '';
+        const payload = this.adminService.getCurrentUser(token);
+        return {
+            success: true,
+            data: await this.adminService.deleteModelProfile(id, payload.id),
+        };
+    }
     getSystemConfigs() {
         return {
             success: true,
@@ -131,6 +155,170 @@ let AppController = class AppController {
         return {
             success: true,
             data: this.adminService.listSyncJobs(),
+        };
+    }
+    async listAgents(request) {
+        const token = request.headers.authorization?.replace('Bearer ', '') ?? '';
+        const payload = this.adminService.getCurrentUser(token);
+        return {
+            success: true,
+            data: this.adminService.listAgents(payload.id),
+        };
+    }
+    async getAgent(request, id) {
+        const token = request.headers.authorization?.replace('Bearer ', '') ?? '';
+        const payload = this.adminService.getCurrentUser(token);
+        return {
+            success: true,
+            data: this.adminService.getAgent(id, payload.id),
+        };
+    }
+    async createAgent(request, body) {
+        const token = request.headers.authorization?.replace('Bearer ', '') ?? '';
+        const payload = this.adminService.getCurrentUser(token);
+        return {
+            success: true,
+            data: await this.adminService.createAgent(body, payload.id),
+        };
+    }
+    async updateAgent(request, id, body) {
+        const token = request.headers.authorization?.replace('Bearer ', '') ?? '';
+        const payload = this.adminService.getCurrentUser(token);
+        return {
+            success: true,
+            data: await this.adminService.updateAgent(id, body, payload.id),
+        };
+    }
+    async deleteAgent(request, id) {
+        const token = request.headers.authorization?.replace('Bearer ', '') ?? '';
+        const payload = this.adminService.getCurrentUser(token);
+        return {
+            success: true,
+            data: await this.adminService.deleteAgent(id, payload.id),
+        };
+    }
+    async duplicateAgent(request, id) {
+        const token = request.headers.authorization?.replace('Bearer ', '') ?? '';
+        const payload = this.adminService.getCurrentUser(token);
+        return {
+            success: true,
+            data: await this.adminService.duplicateAgent(id, payload.id),
+        };
+    }
+    async listAgentSessions(request, id) {
+        const token = request.headers.authorization?.replace('Bearer ', '') ?? '';
+        const payload = this.adminService.getCurrentUser(token);
+        return {
+            success: true,
+            data: this.adminService.listAgentSessions(id, payload.id),
+        };
+    }
+    async createAgentSession(request, id, body) {
+        const token = request.headers.authorization?.replace('Bearer ', '') ?? '';
+        const payload = this.adminService.getCurrentUser(token);
+        const result = await this.adminService.createAgentSession(id, body, payload.id);
+        return { success: true, data: result };
+    }
+    async getAgentSession(request, sessionId) {
+        const token = request.headers.authorization?.replace('Bearer ', '') ?? '';
+        const payload = this.adminService.getCurrentUser(token);
+        return {
+            success: true,
+            data: this.adminService.getAgentSessionDetail(sessionId, payload.id),
+        };
+    }
+    async deleteAgentSession(request, sessionId) {
+        const token = request.headers.authorization?.replace('Bearer ', '') ?? '';
+        const payload = this.adminService.getCurrentUser(token);
+        return {
+            success: true,
+            data: await this.adminService.deleteAgentSession(sessionId, payload.id),
+        };
+    }
+    async postAgentMessage(request, sessionId, body) {
+        const token = request.headers.authorization?.replace('Bearer ', '') ?? '';
+        const payload = this.adminService.getCurrentUser(token);
+        const result = await this.adminService.postAgentMessage(sessionId, body.content, payload.id);
+        return {
+            success: true,
+            data: {
+                userMessage: result.userMessage,
+                assistantMessage: result.assistantMessage,
+                agent: result.agent,
+                model: result.model
+                    ? {
+                        id: result.model.id,
+                        provider: result.model.provider,
+                        model: result.model.model,
+                        apiBaseUrl: result.model.apiBaseUrl,
+                    }
+                    : null,
+                mocked: result.mocked,
+            },
+        };
+    }
+    getChatProfiles() {
+        return {
+            success: true,
+            data: this.adminService.listModelProfiles(),
+        };
+    }
+    async listChatSessions(request) {
+        const token = request.headers.authorization?.replace('Bearer ', '') ?? '';
+        const payload = this.adminService.getCurrentUser(token);
+        return {
+            success: true,
+            data: this.adminService.listChatSessions(payload.id),
+        };
+    }
+    async createChatSession(request, body) {
+        const token = request.headers.authorization?.replace('Bearer ', '') ?? '';
+        const payload = this.adminService.getCurrentUser(token);
+        return {
+            success: true,
+            data: await this.adminService.createChatSession(body, payload.id),
+        };
+    }
+    async getChatSession(request, id) {
+        const token = request.headers.authorization?.replace('Bearer ', '') ?? '';
+        const payload = this.adminService.getCurrentUser(token);
+        const session = this.adminService.getChatSession(id, payload.id);
+        return {
+            success: true,
+            data: {
+                ...session,
+                messages: this.adminService.listChatMessages(id, payload.id),
+            },
+        };
+    }
+    async deleteChatSession(request, id) {
+        const token = request.headers.authorization?.replace('Bearer ', '') ?? '';
+        const payload = this.adminService.getCurrentUser(token);
+        return {
+            success: true,
+            data: await this.adminService.deleteChatSession(id, payload.id),
+        };
+    }
+    async postChatMessage(request, id, body) {
+        const token = request.headers.authorization?.replace('Bearer ', '') ?? '';
+        const payload = this.adminService.getCurrentUser(token);
+        const result = await this.adminService.postChatMessage(id, body.content, payload.id);
+        return {
+            success: true,
+            data: {
+                session: this.adminService.getChatSession(id, payload.id),
+                userMessage: result.userMessage,
+                assistantMessage: result.assistantMessage,
+                model: result.model
+                    ? {
+                        id: result.model.id,
+                        provider: result.model.provider,
+                        model: result.model.model,
+                        apiBaseUrl: result.model.apiBaseUrl,
+                    }
+                    : null,
+                mocked: result.mocked,
+            },
         };
     }
 };
@@ -230,6 +418,34 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], AppController.prototype, "getModelProfiles", null);
 __decorate([
+    (0, common_1.Post)('model-profiles'),
+    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
+    __param(0, (0, common_1.Req)()),
+    __param(1, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:returntype", Promise)
+], AppController.prototype, "createModelProfile", null);
+__decorate([
+    (0, common_1.Patch)('model-profiles/:id'),
+    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
+    __param(0, (0, common_1.Req)()),
+    __param(1, (0, common_1.Param)('id')),
+    __param(2, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, String, Object]),
+    __metadata("design:returntype", Promise)
+], AppController.prototype, "updateModelProfile", null);
+__decorate([
+    (0, common_1.Delete)('model-profiles/:id'),
+    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
+    __param(0, (0, common_1.Req)()),
+    __param(1, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, String]),
+    __metadata("design:returntype", Promise)
+], AppController.prototype, "deleteModelProfile", null);
+__decorate([
     (0, common_1.Get)('system-configs'),
     (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
     __metadata("design:type", Function),
@@ -259,6 +475,159 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], AppController.prototype, "getSyncJobs", null);
+__decorate([
+    (0, common_1.Get)('agents'),
+    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
+    __param(0, (0, common_1.Req)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], AppController.prototype, "listAgents", null);
+__decorate([
+    (0, common_1.Get)('agents/:id'),
+    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
+    __param(0, (0, common_1.Req)()),
+    __param(1, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, String]),
+    __metadata("design:returntype", Promise)
+], AppController.prototype, "getAgent", null);
+__decorate([
+    (0, common_1.Post)('agents'),
+    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
+    __param(0, (0, common_1.Req)()),
+    __param(1, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:returntype", Promise)
+], AppController.prototype, "createAgent", null);
+__decorate([
+    (0, common_1.Patch)('agents/:id'),
+    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
+    __param(0, (0, common_1.Req)()),
+    __param(1, (0, common_1.Param)('id')),
+    __param(2, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, String, Object]),
+    __metadata("design:returntype", Promise)
+], AppController.prototype, "updateAgent", null);
+__decorate([
+    (0, common_1.Delete)('agents/:id'),
+    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
+    __param(0, (0, common_1.Req)()),
+    __param(1, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, String]),
+    __metadata("design:returntype", Promise)
+], AppController.prototype, "deleteAgent", null);
+__decorate([
+    (0, common_1.Post)('agents/:id/duplicate'),
+    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
+    __param(0, (0, common_1.Req)()),
+    __param(1, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, String]),
+    __metadata("design:returntype", Promise)
+], AppController.prototype, "duplicateAgent", null);
+__decorate([
+    (0, common_1.Get)('agents/:id/sessions'),
+    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
+    __param(0, (0, common_1.Req)()),
+    __param(1, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, String]),
+    __metadata("design:returntype", Promise)
+], AppController.prototype, "listAgentSessions", null);
+__decorate([
+    (0, common_1.Post)('agents/:id/sessions'),
+    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
+    __param(0, (0, common_1.Req)()),
+    __param(1, (0, common_1.Param)('id')),
+    __param(2, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, String, Object]),
+    __metadata("design:returntype", Promise)
+], AppController.prototype, "createAgentSession", null);
+__decorate([
+    (0, common_1.Get)('agents/:id/sessions/:sessionId'),
+    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
+    __param(0, (0, common_1.Req)()),
+    __param(1, (0, common_1.Param)('sessionId')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, String]),
+    __metadata("design:returntype", Promise)
+], AppController.prototype, "getAgentSession", null);
+__decorate([
+    (0, common_1.Delete)('agents/:id/sessions/:sessionId'),
+    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
+    __param(0, (0, common_1.Req)()),
+    __param(1, (0, common_1.Param)('sessionId')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, String]),
+    __metadata("design:returntype", Promise)
+], AppController.prototype, "deleteAgentSession", null);
+__decorate([
+    (0, common_1.Post)('agents/:id/sessions/:sessionId/messages'),
+    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
+    __param(0, (0, common_1.Req)()),
+    __param(1, (0, common_1.Param)('sessionId')),
+    __param(2, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, String, Object]),
+    __metadata("design:returntype", Promise)
+], AppController.prototype, "postAgentMessage", null);
+__decorate([
+    (0, common_1.Get)('chat/profiles'),
+    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], AppController.prototype, "getChatProfiles", null);
+__decorate([
+    (0, common_1.Get)('chat/sessions'),
+    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
+    __param(0, (0, common_1.Req)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], AppController.prototype, "listChatSessions", null);
+__decorate([
+    (0, common_1.Post)('chat/sessions'),
+    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
+    __param(0, (0, common_1.Req)()),
+    __param(1, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:returntype", Promise)
+], AppController.prototype, "createChatSession", null);
+__decorate([
+    (0, common_1.Get)('chat/sessions/:id'),
+    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
+    __param(0, (0, common_1.Req)()),
+    __param(1, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, String]),
+    __metadata("design:returntype", Promise)
+], AppController.prototype, "getChatSession", null);
+__decorate([
+    (0, common_1.Delete)('chat/sessions/:id'),
+    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
+    __param(0, (0, common_1.Req)()),
+    __param(1, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, String]),
+    __metadata("design:returntype", Promise)
+], AppController.prototype, "deleteChatSession", null);
+__decorate([
+    (0, common_1.Post)('chat/sessions/:id/messages'),
+    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
+    __param(0, (0, common_1.Req)()),
+    __param(1, (0, common_1.Param)('id')),
+    __param(2, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, String, Object]),
+    __metadata("design:returntype", Promise)
+], AppController.prototype, "postChatMessage", null);
 exports.AppController = AppController = __decorate([
     (0, common_1.Controller)(),
     __metadata("design:paramtypes", [admin_service_1.AdminService])

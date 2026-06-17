@@ -139,6 +139,34 @@ export declare class AppController {
         success: boolean;
         data: import("./types").ModelProfileRecord[];
     };
+    createModelProfile(request: RequestWithHeaders, body: {
+        provider: string;
+        apiBaseUrl: string;
+        apiKey?: string;
+        model: string;
+        systemPrompt?: string;
+        enabled?: boolean;
+    }): Promise<{
+        success: boolean;
+        data: import("./types").ModelProfileRecord;
+    }>;
+    updateModelProfile(request: RequestWithHeaders, id: string, body: {
+        provider?: string;
+        apiBaseUrl?: string;
+        apiKey?: string | null;
+        model?: string;
+        systemPrompt?: string;
+        enabled?: boolean;
+    }): Promise<{
+        success: boolean;
+        data: import("./types").ModelProfileRecord;
+    }>;
+    deleteModelProfile(request: RequestWithHeaders, id: string): Promise<{
+        success: boolean;
+        data: {
+            id: string;
+        };
+    }>;
     getSystemConfigs(): {
         success: boolean;
         data: import("./types").SystemConfigRecord[];
@@ -158,5 +186,127 @@ export declare class AppController {
         success: boolean;
         data: import("./types").SyncJobRecord[];
     };
+    listAgents(request: RequestWithHeaders): Promise<{
+        success: boolean;
+        data: import("./types").AgentRecord[];
+    }>;
+    getAgent(request: RequestWithHeaders, id: string): Promise<{
+        success: boolean;
+        data: import("./types").AgentRecord;
+    }>;
+    createAgent(request: RequestWithHeaders, body: Parameters<AdminService['createAgent']>[0]): Promise<{
+        success: boolean;
+        data: import("./types").AgentRecord;
+    }>;
+    updateAgent(request: RequestWithHeaders, id: string, body: Parameters<AdminService['updateAgent']>[1]): Promise<{
+        success: boolean;
+        data: import("./types").AgentRecord;
+    }>;
+    deleteAgent(request: RequestWithHeaders, id: string): Promise<{
+        success: boolean;
+        data: {
+            id: string;
+        };
+    }>;
+    duplicateAgent(request: RequestWithHeaders, id: string): Promise<{
+        success: boolean;
+        data: import("./types").AgentRecord;
+    }>;
+    listAgentSessions(request: RequestWithHeaders, id: string): Promise<{
+        success: boolean;
+        data: import("./types").AgentChatSessionRecord[];
+    }>;
+    createAgentSession(request: RequestWithHeaders, id: string, body: {
+        title?: string;
+    }): Promise<{
+        success: boolean;
+        data: {
+            session: import("./types").AgentChatSessionRecord;
+            agent: import("./types").AgentRecord;
+            welcomeMessage: string;
+        };
+    }>;
+    getAgentSession(request: RequestWithHeaders, sessionId: string): Promise<{
+        success: boolean;
+        data: {
+            session: import("./types").AgentChatSessionRecord;
+            agent: import("./types").AgentRecord;
+            messages: import("./types").AgentChatMessageRecord[];
+        };
+    }>;
+    deleteAgentSession(request: RequestWithHeaders, sessionId: string): Promise<{
+        success: boolean;
+        data: {
+            id: string;
+        };
+    }>;
+    postAgentMessage(request: RequestWithHeaders, sessionId: string, body: {
+        content: string;
+    }): Promise<{
+        success: boolean;
+        data: {
+            userMessage: import("./types").AgentChatMessageRecord;
+            assistantMessage: import("./types").AgentChatMessageRecord;
+            agent: import("./types").AgentRecord;
+            model: {
+                id: string;
+                provider: string;
+                model: string;
+                apiBaseUrl: string;
+            } | null;
+            mocked: boolean;
+        };
+    }>;
+    getChatProfiles(): {
+        success: boolean;
+        data: import("./types").ModelProfileRecord[];
+    };
+    listChatSessions(request: RequestWithHeaders): Promise<{
+        success: boolean;
+        data: import("./types").ChatSessionRecord[];
+    }>;
+    createChatSession(request: RequestWithHeaders, body: {
+        title?: string;
+        modelProfileId?: string;
+    }): Promise<{
+        success: boolean;
+        data: import("./types").ChatSessionRecord;
+    }>;
+    getChatSession(request: RequestWithHeaders, id: string): Promise<{
+        success: boolean;
+        data: {
+            messages: import("./types").ChatMessageRecord[];
+            id: string;
+            userId: string;
+            organizationId: string;
+            title: string;
+            modelProfileId?: string;
+            createdAt: string;
+            updatedAt: string;
+        };
+    }>;
+    deleteChatSession(request: RequestWithHeaders, id: string): Promise<{
+        success: boolean;
+        data: {
+            id: string;
+        };
+    }>;
+    postChatMessage(request: RequestWithHeaders, id: string, body: {
+        content: string;
+    }): Promise<{
+        success: boolean;
+        data: {
+            session: import("./types").ChatSessionRecord;
+            userMessage: import("./types").ChatMessageRecord;
+            assistantMessage: import("./types").ChatMessageRecord;
+            model: {
+                id: string;
+                provider: string;
+                model: string;
+                apiBaseUrl: string;
+            } | null;
+            mocked: boolean;
+        };
+    }>;
 }
 export {};

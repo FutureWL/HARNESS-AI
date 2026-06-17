@@ -6,6 +6,7 @@ import { useAdminSession } from '@/store/useAdminSession'
 
 const navItems = [
   { to: '/dashboard', label: '仪表盘' },
+  { to: '/agents', label: '智能体' },
   { to: '/users', label: '用户管理' },
   { to: '/devices', label: '设备管理' },
   { to: '/licenses', label: '授权管理' },

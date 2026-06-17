@@ -2,6 +2,9 @@ import { type ReactNode, useEffect } from 'react'
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 
 import { AdminShell } from '@/components/AdminShell'
+import AgentChat from '@/pages/AgentChat'
+import AgentEditor from '@/pages/AgentEditor'
+import Agents from '@/pages/Agents'
 import AuditLogs from '@/pages/AuditLogs'
 import Configs from '@/pages/Configs'
 import Dashboard from '@/pages/Dashboard'
@@ -81,6 +84,46 @@ export default function App() {
           element={
             <ProtectedLayout>
               <AuditLogs />
+            </ProtectedLayout>
+          }
+        />
+        <Route
+          path="/agents"
+          element={
+            <ProtectedLayout>
+              <Agents />
+            </ProtectedLayout>
+          }
+        />
+        <Route
+          path="/agents/new"
+          element={
+            <ProtectedLayout>
+              <AgentEditor />
+            </ProtectedLayout>
+          }
+        />
+        <Route
+          path="/agents/:id/edit"
+          element={
+            <ProtectedLayout>
+              <AgentEditor />
+            </ProtectedLayout>
+          }
+        />
+        <Route
+          path="/agents/:id/sessions"
+          element={
+            <ProtectedLayout>
+              <AgentChat />
+            </ProtectedLayout>
+          }
+        />
+        <Route
+          path="/agents/:id/sessions/:sessionId"
+          element={
+            <ProtectedLayout>
+              <AgentChat />
             </ProtectedLayout>
           }
         />

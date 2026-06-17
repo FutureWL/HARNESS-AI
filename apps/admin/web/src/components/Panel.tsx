@@ -1,8 +1,8 @@
 import type { PropsWithChildren, ReactNode } from 'react'
 
 type PanelProps = PropsWithChildren<{
-  title: string
-  description?: string
+  title: ReactNode
+  description?: ReactNode
   action?: ReactNode
 }>
 

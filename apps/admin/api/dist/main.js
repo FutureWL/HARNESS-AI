@@ -10,7 +10,7 @@ async function bootstrap() {
                 callback(null, true);
                 return;
             }
-            if (/^http:\/\/localhost:\d+$/.test(origin)) {
+            if (/^http:\/\/(localhost|127\.0\.0\.1|\[::1\]):\d+$/.test(origin)) {
                 callback(null, true);
                 return;
             }
@@ -19,7 +19,7 @@ async function bootstrap() {
         credentials: true,
     });
     app.setGlobalPrefix('api');
-    await app.listen(process.env.PORT ?? 3201);
+    await app.listen(process.env.PORT ?? 33203);
 }
 bootstrap();
 //# sourceMappingURL=main.js.map

@@ -9,7 +9,7 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
     ports:
-      - "54329:5432"
+      - "33204:5432"
     volumes:
       - harness-admin-postgres:/var/lib/postgresql/data
 

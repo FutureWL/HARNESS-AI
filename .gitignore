@@ -3,6 +3,7 @@ pnpm-lock.yaml
 apps/renderer/dist/
 apps/desktop/dist/
 packages/core/dist/
+apps/admin/api/dist/
 release/
 coverage/
 *.db
@@ -13,3 +14,8 @@ coverage/
 .vscode/
 *.log
 portal/certs/
+
+# 运行时持久化与截图
+apps/admin/api/storage/
+*.png
+!docs/**/*.png
