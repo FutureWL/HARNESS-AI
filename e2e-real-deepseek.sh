@@ -2,7 +2,7 @@
 # 真实 DeepSeek 端到端测试
 set -e
 KEY="sk-ddd35b8cf1d04ea88fcf8b3059f11f74"
-BASE="http://localhost:33203/api"
+BASE="http://localhost:37203/api"
 
 step() { echo ""; echo "==================== $* ===================="; }
 field(){ python3 -c "import sys,json;d=json.load(sys.stdin);print(d$1)"; }

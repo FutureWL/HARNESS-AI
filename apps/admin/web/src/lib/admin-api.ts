@@ -142,7 +142,7 @@ export type AgentSessionDetail = {
   messages: AgentChatMessage[]
 }
 
-const API_BASE_URL = import.meta.env.VITE_ADMIN_API_BASE_URL ?? 'http://localhost:33203/api'
+const API_BASE_URL = import.meta.env.VITE_ADMIN_API_BASE_URL ?? 'http://localhost:37203/api'
 
 async function request<T>(path: string, options: RequestInit = {}, token?: string) {
   const response = await fetch(`${API_BASE_URL}${path}`, {

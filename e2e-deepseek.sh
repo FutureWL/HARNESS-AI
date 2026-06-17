@@ -8,7 +8,7 @@
 # 真实 DeepSeek 接入：把下面的 MOCK_BASE 换成 https://api.deepseek.com，
 #                     KEY 换成你在 platform.deepseek.com 申请的值即可。
 set -e
-BASE="http://localhost:33203/api"
+BASE="http://localhost:37203/api"
 pp()   { jq .; }
 field(){ python3 -c "import sys,json;d=json.load(sys.stdin);print(d$1)"; }
 step() { echo ""; echo "==================== $* ===================="; }

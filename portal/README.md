@@ -11,15 +11,15 @@ docker compose up -d --build
 
 访问：
 
-- HTTPS：https://localhost:33211
-- HTTP（自动跳转到 HTTPS）：http://localhost:33210
+- HTTPS：https://localhost:37211
+- HTTP（自动跳转到 HTTPS）：http://localhost:37210
 - 健康检查：
-  - http://localhost:33210/healthz
-  - https://localhost:33211/healthz
+  - http://localhost:37210/healthz
+  - https://localhost:37211/healthz
 
 说明：
 
-- 端口固定分配在 33200～33300 范围内，默认使用 33210（HTTP）和 33211（HTTPS）。
+- 端口固定分配在 33200～33300 范围内，默认使用 37210（HTTP）和 37211（HTTPS）。
 - 容器会在 `portal/certs/` 下自动生成自签名证书（`tls.crt` / `tls.key`）。浏览器首次访问会提示证书不受信任，选择继续访问即可。
 
 ## 端口自定义（仍需在 33200～33300 内）

@@ -4,8 +4,8 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "33210:80"
-      - "33211:443"
+      - "37210:80"
+      - "37211:443"
     volumes:
       - ./certs:/etc/nginx/certs
     restart: unless-stopped

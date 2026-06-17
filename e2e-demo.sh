@@ -1,7 +1,7 @@
 #!/bin/bash
 # Harness AI 平台端到端演示：多用户 + 用户自定义 + LLM 对话 + 聊天记录持久化
 set -e
-BASE="http://localhost:33203/api"
+BASE="http://localhost:37203/api"
 
 step() { echo ""; echo "==================== $* ===================="; }
 pp()   { jq .; }

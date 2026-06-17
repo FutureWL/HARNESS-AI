@@ -1,7 +1,7 @@
 #!/bin/bash
 # 智能体（Agent）端到端测试
 set -e
-BASE="http://localhost:33203/api"
+BASE="http://localhost:37203/api"
 pp()   { jq .; }
 field(){ python3 -c "import sys,json;d=json.load(sys.stdin);print(d$1)"; }
 step() { echo ""; echo "==================== $* ===================="; }
